@@ -1,3 +1,5 @@
+import clsx from "clsx";
+
 export interface ButtonProps {
     /** Is this the principal call to action on the page? */
     type: 'confirm' | 'cancel' | 'disabled';
@@ -15,25 +17,19 @@ export const Button = ({
                            customStyle,
                            ...props
                        }: ButtonProps) => {
-    const confirmStyle = 'bg-blue-500 border-none text-white py-4 px-8 text-center no-underline text-lg my-5 mx-1 cursor-pointer rounded-md';
-    const cancelStyle = 'bg-red-500 border-none text-white py-4 px-8 text-center no-underline text-lg my-5 mx-1 cursor-pointer rounded-md';
-    const disabledStyle = 'bg-gray-400 border-none text-white py-4 px-8 text-center no-underline text-lg my-5 mx-1 rounded-md cursor-not-allowed';
-    let buttonStyle;
-    switch (type) {
-        case "confirm":
-            buttonStyle = confirmStyle;
-            break;
-        case "cancel":
-            buttonStyle = cancelStyle;
-            break;
-        case "disabled":
-            buttonStyle = disabledStyle;
-            break;
-    }
+    const baseStyle =
+        "border-none text-white py-4 px-8 text-center no-underline text-lg my-5 mx-1 rounded-md";
+
+    const variants: Record<string, string> = {
+        confirm: "bg-blue-500 cursor-pointer",
+        cancel: "bg-red-500 cursor-pointer",
+        disabled: "bg-gray-400 cursor-not-allowed",
+    };
+
     return (
         <button
             type="button"
-            className={buttonStyle + (customStyle ? ` ${customStyle}` : '')}
+            className={clsx(baseStyle, variants[type], customStyle)}
             {...props}
         >
             {label}
