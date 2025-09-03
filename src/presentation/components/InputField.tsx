@@ -3,7 +3,7 @@ import {useState} from "react";
 type InputFieldProps = {
     label: string;
     id: string;
-    value?: number;
+    numberValue?: number;
     rangeMin?: number;
     rangeMax?: number;
     suffix?: string;
@@ -12,12 +12,12 @@ type InputFieldProps = {
 export function InputField({
                                label,
                                id,
-                               value = 0,
+                               numberValue,
                                rangeMin,
                                rangeMax,
                                suffix = "",
                            }: InputFieldProps) {
-    const [val, setVal] = useState(value);
+    const [val, setVal] = useState(numberValue);
 
     return (
         <div className="flex flex-col items-center">

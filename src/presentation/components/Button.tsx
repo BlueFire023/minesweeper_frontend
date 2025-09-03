@@ -1,34 +1,39 @@
-import React from 'react';
-
-import './button.css';
-
 export interface ButtonProps {
     /** Is this the principal call to action on the page? */
-    primary?: boolean;
-    /** What background color to use */
-    backgroundColor?: string;
-    /** How large should the button be? */
-    size?: 'small' | 'medium' | 'large';
+    type: 'confirm' | 'cancel' | 'disabled';
     /** Button contents */
     label: string;
+    customStyle?: string;
     /** Optional click handler */
     onClick?: () => void;
 }
 
 /** Primary UI component for user interaction */
 export const Button = ({
-                           primary = false,
-                           size = 'medium',
-                           backgroundColor,
+                           type = 'confirm',
                            label,
+                           customStyle,
                            ...props
                        }: ButtonProps) => {
-    const mode = primary ? 'storybook-button--primary' : 'storybook-button--secondary';
+    const confirmStyle = 'bg-blue-500 border-none text-white py-4 px-8 text-center no-underline text-lg my-5 mx-1 cursor-pointer rounded-md';
+    const cancelStyle = 'bg-red-500 border-none text-white py-4 px-8 text-center no-underline text-lg my-5 mx-1 cursor-pointer rounded-md';
+    const disabledStyle = 'bg-gray-400 border-none text-white py-4 px-8 text-center no-underline text-lg my-5 mx-1 rounded-md cursor-not-allowed';
+    let buttonStyle;
+    switch (type) {
+        case "confirm":
+            buttonStyle = confirmStyle;
+            break;
+        case "cancel":
+            buttonStyle = cancelStyle;
+            break;
+        case "disabled":
+            buttonStyle = disabledStyle;
+            break;
+    }
     return (
         <button
             type="button"
-            className={['storybook-button', `storybook-button--${size}`, mode].join(' ')}
-            style={{backgroundColor}}
+            className={buttonStyle + (customStyle ? ` ${customStyle}` : '')}
             {...props}
         >
             {label}
